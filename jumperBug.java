@@ -5,7 +5,7 @@ import info.gridworld.grid.Location;
 
 import java.awt.Color;
 
-public class jumperBug extends Bug{
+public class jumperBug extends Actor{
 	
 	private int steps;
 
@@ -38,7 +38,7 @@ public class jumperBug extends Bug{
 		steps = 0;
 	}
 
-	public boolean canMove() {
+	public boolean canJump() {
 	    Grid<Actor> gr = getGrid();
 	    if (gr == null)
 	        return false;
