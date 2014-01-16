@@ -1,6 +1,13 @@
-public class jumperBug extends Actor{
-	
+package info.gridworld.actor;
 
+import info.gridworld.grid.Grid;
+import info.gridworld.grid.Location;
+
+import java.awt.Color;
+
+public class jumperBug extends Bug{
+	
+	private int steps;
 
 	// Plan:
 	// If jumper can jump, it will jump
@@ -29,6 +36,21 @@ public class jumperBug extends Actor{
 	public jumperBug(int length)
 	{
 		steps = 0;
+	}
+
+	public boolean canMove() {
+	    Grid<Actor> gr = getGrid();
+	    if (gr == null)
+	        return false;
+	    Location loc = getLocation();
+	    Location next = loc.getAdjacentLocation(getDirection());
+	    Location second = next.getAdjacentLocation(getDirection());
+	    if (!gr.isValid(next))
+	        return false;
+	    if (!gr.isValid(second))
+	    	return false;
+	    Actor neighbor = gr.get(second);
+	    return (neighbor == null) || (neighbor instanceof Flower);
 	}
 
 }
