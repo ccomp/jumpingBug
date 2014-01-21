@@ -1,13 +1,18 @@
-package info.gridworld.actor;
+// package info.gridworld.actor;
+
+import info.gridworld.actor.Actor;
+import info.gridworld.actor.Bug;
+import info.gridworld.actor.Flower;
 
 import info.gridworld.grid.Grid;
 import info.gridworld.grid.Location;
 
 import java.awt.Color;
 
-public class jumperBug extends Actor{
+public class JumperBug extends Actor{
 	
 	private int steps;
+
 
 	// Plan:
 	// If jumper can jump, it will jump
@@ -34,7 +39,7 @@ public class jumperBug extends Actor{
 	// -adjacent cell either occupied or not, with the next cell at the edge
 	// 
 
-	public jumperBug()
+	public JumperBug()
 	{
 
 	}
@@ -47,35 +52,43 @@ public class jumperBug extends Actor{
 		}
 	}
 
-	public void jump()
-	{
-		Grid<Actor> grid = getGrid();
-		if (grid == null) {
-			return false;
-		}
-		Location here = getLocation();
-		Location nextLocation = here.adjacentLocation(getDirection());
-		Location afterNext = nextLocation.adjacentLocation(getDirection());
-		if (canJump(afterNext)) {
-			moveTo(afterNext);
-		} else {
-			removeSelfFromGrid();
-		}
-	}
+	public void turn() 
+	 { 
+	 setDirection(getDirection() + Location.HALF_RIGHT); 
+	 }
+
+
 
 	public boolean canJump() {
 	    Grid<Actor> gr = getGrid();
 	    if (gr == null)
 	        return false;
+
 	    Location loc = getLocation();
 	    Location next = loc.getAdjacentLocation(getDirection());
 	    Location second = next.getAdjacentLocation(getDirection());
+	    
 	    if (!gr.isValid(next))
 	        return false;
+
 	    if (!gr.isValid(second))
 	    	return false;
 	    Actor neighbor = gr.get(second);
 	    return (neighbor == null) || (neighbor instanceof Flower);
+	}
+
+	public void jump()
+	{
+		Location here = getLocation();
+		Location nextLocation = here.getAdjacentLocation(getDirection());
+		Location afterNext = nextLocation.getAdjacentLocation(getDirection());
+
+		moveTo(afterNext);
+
+
+		// if (canJump(second)) {
+		// 	moveTo(second);
+		// }
 	}
 
 }
